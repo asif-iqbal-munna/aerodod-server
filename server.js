@@ -24,11 +24,19 @@ const run = () => {
     client.connect();
     const database = client.db("aerodod");
     const liveAnywhereCollection = database.collection("liveAnywhere");
+    const discoverThingsCollection = database.collection("discoverThings");
 
+    // Getting live anywhere category data from the server
     app.get("/liveanywhere", async (req, res) => {
       const result = await liveAnywhereCollection.find({}).toArray();
       res.send(result);
     });
+
+    // Getting Discover things category data from the server
+    app.get('/discoverthings', async(req, res) => {
+        const result = await discoverThingsCollection.find({}).toArray();
+        res.send(result);
+    })
   } finally {
     // client.close()
   }
