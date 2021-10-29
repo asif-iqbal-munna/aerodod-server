@@ -25,6 +25,7 @@ const run = () => {
     const database = client.db("aerodod");
     const liveAnywhereCollection = database.collection("liveAnywhere");
     const discoverThingsCollection = database.collection("discoverThings");
+    const tourPlansCollection = database.collection("tourPlans");
 
     // Getting live anywhere category data from the server
     app.get("/liveanywhere", async (req, res) => {
@@ -32,11 +33,18 @@ const run = () => {
       res.send(result);
     });
 
-    // Getting Discover things category data from the server
-    app.get('/discoverthings', async(req, res) => {
-        const result = await discoverThingsCollection.find({}).toArray();
-        res.send(result);
-    })
+    // Getting Discover things data from the server
+    app.get("/discoverthings", async (req, res) => {
+      const result = await discoverThingsCollection.find({}).toArray();
+      res.send(result);
+    });
+
+    // Getting Tour plans data from the server
+    app.get("/tourplans", async (req, res) => {
+      const result = await tourPlansCollection.find({}).toArray();
+      res.send(result);
+    });
+    
   } finally {
     // client.close()
   }
