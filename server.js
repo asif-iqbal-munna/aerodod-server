@@ -27,6 +27,7 @@ const run = () => {
     const liveAnywhereCollection = database.collection("liveAnywhere");
     const discoverThingsCollection = database.collection("discoverThings");
     const tourPlansCollection = database.collection("tourPlans");
+    const customerToursCollection = database.collection("myTours");
 
     // Getting live anywhere category data from the server
     app.get("/liveanywhere", async (req, res) => {
@@ -51,6 +52,30 @@ const run = () => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
       const result = await tourPlansCollection.findOne(query);
+      res.send(result);
+    });
+
+    //
+    app.post("/mytours", async (req, res) => {
+      const tours = req.body;
+      const result = await customerToursCollection.insertOne(tours);
+      res.send(result);
+    });
+
+    //
+    app.get("/mytours/:email", async (req, res) => {
+      const result = await customerToursCollection
+        .find({
+          email: req.params.email,
+        })
+        .toArray();
+      res.send(result);
+    });
+
+    app.delete("/mytours/:id", async (req, res) => {
+      const result = await customerToursCollection.deleteOne({
+        _id: ObjectId(req.params.id),
+      });
       res.send(result);
     });
   } finally {
