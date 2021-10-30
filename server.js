@@ -1,5 +1,6 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
+const ObjectId = require("mongodb").ObjectId;
 const cors = require("cors");
 require("dotenv").config();
 const app = express();
@@ -44,7 +45,14 @@ const run = () => {
       const result = await tourPlansCollection.find({}).toArray();
       res.send(result);
     });
-    
+
+    // Getting Single Tour plans data from the server
+    app.get("/tourplans/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await tourPlansCollection.findOne(query);
+      res.send(result);
+    });
   } finally {
     // client.close()
   }
