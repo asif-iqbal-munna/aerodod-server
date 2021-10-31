@@ -41,6 +41,13 @@ const run = () => {
       res.send(result);
     });
 
+    app.post("/tourplans", async (req, res) => {
+      const tourHost = req.body;
+      console.log(req.body);
+      const result = await tourPlansCollection.insertOne(tourHost);
+      res.send(result);
+    });
+
     // Getting Tour plans data from the server
     app.get("/tourplans", async (req, res) => {
       const result = await tourPlansCollection.find({}).toArray();
