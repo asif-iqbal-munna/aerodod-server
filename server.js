@@ -55,19 +55,20 @@ const run = () => {
       res.send(result);
     });
 
-    //
+    // Posting customer/client tour
     app.post("/mytours", async (req, res) => {
       const tours = req.body;
       const result = await customerToursCollection.insertOne(tours);
       res.send(result);
     });
 
+    // Getting All Tours
     app.get("/mytours", async (req, res) => {
       const result = await customerToursCollection.find({}).toArray();
       res.send(result);
     });
 
-    //
+    // Getting tours by email
     app.get("/mytours/:email", async (req, res) => {
       const result = await customerToursCollection
         .find({
@@ -77,12 +78,21 @@ const run = () => {
       res.send(result);
     });
 
+    // Delete Tours From My Tours
     app.delete("/mytours/:id", async (req, res) => {
-      const result = await customerToursCollection.deleteOne({
+      const query = {
         _id: ObjectId(req.params.id),
-      });
+      };
+      const result = await customerToursCollection.deleteOne(query);
       res.send(result);
     });
+
+    // // Delete tour from manages tours
+    // app.delete("/mytours/:id", async (req, res) => {
+    //   const query = {
+    //     _id: ObjectId(req.params.id),
+    //   };
+    // });
   } finally {
     // client.close()
   }
