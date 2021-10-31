@@ -62,6 +62,11 @@ const run = () => {
       res.send(result);
     });
 
+    app.get("/mytours", async (req, res) => {
+      const result = await customerToursCollection.find({}).toArray();
+      res.send(result);
+    });
+
     //
     app.get("/mytours/:email", async (req, res) => {
       const result = await customerToursCollection
