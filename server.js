@@ -94,12 +94,17 @@ const run = () => {
       res.send(result);
     });
 
-    // // Delete tour from manages tours
-    // app.delete("/mytours/:id", async (req, res) => {
-    //   const query = {
-    //     _id: ObjectId(req.params.id),
-    //   };
-    // });
+    // Update Tour Status
+    app.put("/mytours/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: ObjectId(id) };
+      const result = await customerToursCollection.updateOne(filter, {
+        $set: {
+          status: "approved",
+        },
+      });
+      res.send(result);
+    });
   } finally {
     // client.close()
   }
